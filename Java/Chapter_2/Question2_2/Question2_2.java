@@ -3,7 +3,8 @@ import CtCILibrary.AssortedMethods;
 import CtCILibrary.LinkedListNode;
 
 public class Question2_2{
-	// This recursive method can only print, it can not return the value or node.
+	// This recursive method can only print, it can not return the value or node. 
+	// Note: Recursive takes at least O(n) space
 	public static int nthToLast1(LinkedListNode head, int n) {
 		if (n == 0 || head == null) {
 			return 0;
@@ -14,7 +15,7 @@ public class Question2_2{
 		}
 		return k;
 	}
-	// 
+	// O(n) O(1)
 	public static LinkedListNode nthToLast2(LinkedListNode head, int n){
 		if(n == 0 || head == null)
 			return null;
@@ -40,7 +41,7 @@ public class Question2_2{
 		System.out.println(head.printForward());
 		int nth = 2;
 		int n = nthToLast1(head, nth);
-		
+
 		LinkedListNode node = nthToLast2(head, nth);
 		if (node != null) {
 			System.out.println(nth + "th to last node is " + node.data);
