@@ -11,10 +11,29 @@
 // Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295.
 // Output: 9 -> 1 -> 2.That is, 912.
 
-public class Question2_5{
-	public static LinkedListNode addLists(LinkedListNode n1, LinkedListNode n2, boolean order){
+import CtCILibrary.AssortedMethods;
+import CtCILibrary.LinkedListNode;
 
+public class Question2_5{
+	public static LinkedListNode addLists(LinkedListNode n1, LinkedListNode n2, int carry){
+		if(n1 == null && n2 == null && carry == 0) return null;
+		int sum = carry;
+		LinkedListNode node = new LinkedListNode();
+		if (n1!=null)
+			sum += n1.data;
+		if (n2!=null)
+			sum += n2.data;
+		node.data = sum % 10;
+		carry = (sum >9) ? 1 : 0;
+		if(n1 != null || n2 != null){
+			LinkedListNode next = addLists( (n1!= null) ? n1.next : null,(n2!= null) ? n2.next : null,carry);
+			node.setNext(next);
+		}
+		return node;
 	}
+	// public static LinkedListNode addListsForward(LinkedListNode n1, LinkedListNode n2, int carry){
+
+	// }
 	public static void main(String[] args) {
 		LinkedListNode lA1 = new LinkedListNode(9, null, null);
 		LinkedListNode lA2 = new LinkedListNode(9, null, lA1);
@@ -24,18 +43,14 @@ public class Question2_5{
 		LinkedListNode lB2 = new LinkedListNode(0, null, lB1);
 		LinkedListNode lB3 = new LinkedListNode(0, null, lB2);	
 		
-		boolean order = true;  // true: forward; false: backward.
-		LinkedListNode list3 = addLists(lA1, lB1, order);
+		int carry = 0;  // true: forward; false: backward.
+		LinkedListNode list1 = addLists(lA1, lB1, carry);
+		// LinkedListNode list2 = addListsForward(lA1, lB1, carry);
 		
 		System.out.println("  " + lA1.printForward());		
-		System.out.println("+ " + lB1.printForward());			
-		System.out.println("= " + list3.printForward());	
-		
-		int l1 = linkedListToInt(lA1);
-		int l2 = linkedListToInt(lB1);
-		int l3 = linkedListToInt(list3);
-		
-		System.out.print(l1 + " + " + l2 + " = " + l3 + "\n");
-		System.out.print(l1 + " + " + l2 + " = " + (l1 + l2));		
+		System.out.println("+ " + lB1.printForward());	
+		System.out.println("= " + list1.printForward());			
+		// System.out.println("= " + list2.printForward());
+
 	}
 }
